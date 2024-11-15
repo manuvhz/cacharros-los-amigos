@@ -1,0 +1,121 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+}
+
+.titulo {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+
+.navbarra {
+    background-color: #343a40;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand h2 {
+    font-size: 1.6rem;
+    color: white;
+    margin-left: 1rem;
+}
+
+.carrito {
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.carrito:hover {
+    transform: scale(1.1);
+}
+
+.toastfondo {
+    background-color: #ffdd57;
+    border-radius: 5px;
+}
+
+.modal-header, .modal-footer {
+    background-color: #343a40;
+    color: white;
+}
+
+.btn-primary {
+    background-color: hwb(235 0% 0%);
+    border-color: hwb(235 0% 0%);
+}
+
+.btn-primary:hover {
+    background-color: hwb(235 0% 0%);
+    border-color: #0d00ff;
+}
+
+.card {
+    transition: transform 0.3s ease;
+    border: 1px solid #0015ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.registro {
+background-color: #0015ff;
+border-radius: 3%;
+color: #f8f9fa;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-body h5 {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.list-group-item {
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.form-control {
+    transition: border 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: hwb(235 0% 0%);
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.2);
+}
+
+.modal-lg {
+    max-width: 80%;
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+#catalogoContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; 
+}
+
+.card {
+    max-width: 100%;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
