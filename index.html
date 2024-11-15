@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="codigo.js" defer></script>
+    <title>Carrito de Compras</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-dark navbarra">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://1000marcas.net/wp-content/uploads/2020/01/Mazda-Logo-2018.png" alt="" width="100" height="60" class="d-inline-block align-text-top">
+                    <h2 class="titulo">CACHARROS LOS AMIGOS</h2>
+                </a>
+                <div class="carrito d-flex justify-content-end align-items-center mt-3" id="carritoBtn" data-bs-toggle="modal" data-bs-target="#factura">
+                    <button type="button" class="btn btn-primary position-relative">
+                        <i class="bi bi-cart4"></i>
+                        <span id="carritoCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row mt-3 justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="card bg-white shadow-lg rounded">
+                    <div class="card-header text-center">
+                        <h2 class="registro">REGISTRO DE VEHÍCULOS</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="marca" placeholder="Marca">
+                            <label for="marca">Marca</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="modelo" placeholder="Modelo">
+                            <label for="modelo">Modelo</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="cilindraje" placeholder="Cilindraje">
+                            <label for="cilindraje">Cilindraje</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="imagen" placeholder="Imagen">
+                            <label for="imagen">Imagen</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="precio" placeholder="Precio">
+                            <label for="precio">Precio</label>
+                        </div>
+                        <button type="button" onclick="agregarCarro()" class="btn btn-primary w-100">Agregar Vehículo</button>
+                        <button type="button" onclick="mostrarCatalogo()" class="btn btn-outline-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#catalogoModal">Ver Catalogo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="catalogoModal" tabindex="-1" aria-labelledby="catalogoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-scrollable"> <!-- Ajuste aquí -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="catalogoLabel">Catálogo de Vehículos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="catalogoContainer"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="toastMessage" class="toast toastfondo" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="bi bi-file-arrow-up"></i>
+                    <strong class="me-auto">Notificación</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div id="toastBody" class="toast-body"></div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="factura" tabindex="-1" aria-labelledby="facturaLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="facturaLabel">Carrito de Compras</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="detalleCarrito" class="list-group"></ul>
+                        <hr>
+                        <h3 id="totalCarrito">Total: $0</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
