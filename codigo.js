@@ -30,7 +30,7 @@ function agregarCarro() {
 
 function mostrarCatalogo() {
     const catalogoContainer = document.getElementById('catalogoContainer');
-    catalogoContainer.innerHTML = '';  
+    catalogoContainer.innerHTML = '';
 
     vehiculos.forEach(carro => {
         const precioFormateado = parseInt(carro.precio).toLocaleString();
@@ -52,17 +52,39 @@ function mostrarCatalogo() {
 
 function agregarAlCarrito(id) {
     const carro = vehiculos.find(c => c.id === id);
-    if (!carrito.includes(carro)) {
-        carrito.push(carro);
-        document.getElementById('carritoCount').innerText = carrito.length;
-        mostrarToast(`${carro.marca} ${carro.modelo} agregado al carrito`, 'success');
+    const carroEnCarrito = carrito.find(c => c.id === id);
+
+    if (carroEnCarrito) {
+        carroEnCarrito.cantidad += 1; // Incrementar la cantidad si ya está en el carrito
+    } else {
+        carrito.push({ ...carro, cantidad: 1 }); // Si no está, agregar con cantidad 1
     }
+
+    document.getElementById('carritoCount').innerText = carrito.length;
+    mostrarToast(`${carro.marca} ${carro.modelo} agregado al carrito`, 'success');
+    mostrarFactura();
 }
 
 function eliminarDelCarrito(id) {
     carrito = carrito.filter(carro => carro.id !== id);
     mostrarFactura();
     document.getElementById('carritoCount').innerText = carrito.length;
+}
+
+function incrementarCantidad(id) {
+    const carro = carrito.find(c => c.id === id);
+    if (carro) {
+        carro.cantidad += 1;
+        mostrarFactura();
+    }
+}
+
+function decrementarCantidad(id) {
+    const carro = carrito.find(c => c.id === id);
+    if (carro && carro.cantidad > 1) {
+        carro.cantidad -= 1;
+        mostrarFactura();
+    }
 }
 
 function mostrarToast(mensaje, tipo) {
@@ -78,19 +100,22 @@ function mostrarFactura() {
     detalleCarrito.innerHTML = '';
     let total = 0;
     carrito.forEach(carro => {
-        const precioFormateado = parseInt(carro.precio).toLocaleString(); // Formatear el precio con separador de miles
+        const precioFormateado = parseInt(carro.precio).toLocaleString();
+        const totalItem = carro.cantidad * carro.precio;
+        const totalItemFormateado = totalItem.toLocaleString();
+
         const item = `
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                ${carro.marca} ${carro.modelo} - $${precioFormateado}
-                <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito(${carro.id})">
-                    Eliminar
-                </button>
+                ${carro.marca} ${carro.modelo} - $${precioFormateado} x ${carro.cantidad} = $${totalItemFormateado}
+                <button class="btn btn-sm btn-success" onclick="incrementarCantidad(${carro.id})">+</button>
+                <button class="btn btn-sm btn-warning" onclick="decrementarCantidad(${carro.id})">-</button>
+                <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito(${carro.id})">Eliminar</button>
             </li>
         `;
         detalleCarrito.innerHTML += item;
-        total += parseFloat(carro.precio);
+        total += totalItem;
     });
-    document.getElementById('totalCarrito').innerText = `Total: $${total.toLocaleString()}`; // Formatear el total con separador de miles
+    document.getElementById('totalCarrito').innerText = `Total: $${total.toLocaleString()}`;
 }
 
 document.getElementById('carritoBtn').addEventListener('click', mostrarFactura);
